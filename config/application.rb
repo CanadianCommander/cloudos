@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../lib/app_proxy'
 
 require 'rails/all'
 
@@ -18,5 +19,21 @@ module Cloudos
 
     # allow requests to cloudos.ca domain
     config.hosts << /.*cloudos\.ca/
+
+    # custom proxy settings
+    config.proxy = {
+      # start of app port range, inclusive
+      app_port_star: 4000,
+      # end of app port range, inclusive
+      app_port_end: 4124,
+      # reserved path for cloudos use
+      reserved_path: '/cloudos/'
+    }
+
+    # autoload lib dir
+    config.eager_load_paths << Rails.root.join('lib')
+
+    # use custom proxy middleware
+    config.middleware.use AppProxy
   end
 end
