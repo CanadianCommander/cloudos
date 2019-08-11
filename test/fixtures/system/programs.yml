@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+appOne:
+  id: 1
+  name: "appOne"
+  container_id: 1
+  image_id: 1
+  icon_path: /var/www/app/app1.png
+  memory_requirement: 1024
+  created_at: '2019-01-01'
+  updated_at: '2019-01-01'
+
+appTwo:
+  id: 2
+  name: "appTwo"
+  container_id: 1
+  image_id: 1
+  icon_path: /var/www/app/app2.png
+  memory_requirement: 1024
+  created_at: '2019-01-01'
+  updated_at: '2019-01-01'
