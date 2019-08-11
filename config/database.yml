@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: cloudos_production
+  database: cloudos
   username: cloudos
   password: <%= ENV['CLOUDOS_DATABASE_PASSWORD'] %>

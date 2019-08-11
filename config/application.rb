@@ -25,7 +25,7 @@ module Cloudos
       # start of app port range, inclusive
       app_port_star: 4000,
       # end of app port range, inclusive
-      app_port_end: 4124,
+      app_port_end: 4128,
       # reserved path for cloudos use
       reserved_path: '/cloudos/'
     }
