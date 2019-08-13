@@ -5,11 +5,11 @@ class Api::System::ProgramManagerService
 
   # return a list of install programs
   def getInstallPrograms
-    return System::Program.all
+    return Program.all
   end
 
   def getProgram (id)
-    return System::Program.find(id)
+    return Program.find(id)
   end
 
 

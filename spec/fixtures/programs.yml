@@ -3,7 +3,7 @@
 appOne:
   id: 1
   name: "appOne"
-  image_id: 1
+  image_id: "1klbjvcblkc-cvjxgl-gdfkjx"
   icon_path: /var/www/app/app1.png
   created_at: '2019-01-01'
   updated_at: '2019-01-01'
@@ -11,7 +11,7 @@ appOne:
 appTwo:
   id: 2
   name: "appTwo"
-  image_id: 1
+  image_id: "fsdjkl342j0jsdf-32jrlsdjfksa-2fkl"
   icon_path: /var/www/app/app2.png
   created_at: '2019-01-01'
   updated_at: '2019-01-01'
