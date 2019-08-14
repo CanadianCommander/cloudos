@@ -1,18 +1,17 @@
 class Api::System::ProgramController < Api::ApiController
 
-  def listPrograms
-    res = success_response(ProgramManagerService.instance.getInstallPrograms)
+  def list_programs
+    res = success_response(ProgramManagerService.instance.get_installed_programs)
     render json: res
   end
 
-  def getProgramInfo
+  def get_program_info
     begin
-      program = ProgramManagerService.instance.getProgram(params[:id])
+      program = ProgramManagerService.instance.get_program(params[:id])
       render json: success_response(program)
     rescue ActiveRecord::RecordNotFound => e
-      render json: error_response("Program #{params[:id]} not found")
+      render json: error_response("Program #{params[:id]} not found"), status: 400
     end
   end
-
 
 end

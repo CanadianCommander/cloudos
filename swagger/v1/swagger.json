@@ -112,7 +112,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "success_response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "error_response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
         }
       }
     }

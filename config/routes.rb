@@ -10,9 +10,9 @@ Rails.application.routes.draw do
 
   # system api
   namespace :api do
-    get '/system/programs/list', to: 'system/program#listPrograms'
+    get '/system/programs/list', to: 'system/program#list_programs'
     scope '/system/program/:id' do
-      get '/info', to: 'system/program#getProgramInfo'
+      get '/info', to: 'system/program#get_program_info'
     end
   end
 

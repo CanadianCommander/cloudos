@@ -19,7 +19,27 @@ RSpec.configure do |config|
         title: 'CloudOS API V1',
         version: 'v1'
       },
-      paths: {}
+      paths: {},
+      definitions: {
+
+        success_response: {
+          type: :object,
+          properties: {
+            status: {type: :string},
+            data: {type: :object},
+            message: {type: :string},
+          }
+        },
+
+        error_response: {
+          type: :object,
+          properties: {
+            status: {type: :string},
+            data: {type: :object},
+            message: {type: :string},
+          }
+        }
+      }
     }
   }
 end

@@ -66,6 +66,12 @@ describe 'CloudOS API' do
           expect(json[:data][:name]).to eql('appOne')
         end
       end
+
+      response '400', 'no program found with the specified id' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) { 4 }
+        run_test!
+      end
     end
   end
 end
