@@ -1,13 +1,13 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "API V1",
+    "title": "CloudOS API V1",
     "version": "v1"
   },
   "paths": {
     "/api/system/programs/list": {
       "get": {
-        "summary": "Gets all install programs",
+        "summary": "Get a list of install programs",
         "tags": [
           "Program"
         ],
@@ -16,7 +16,68 @@
         ],
         "responses": {
           "200": {
-            "description": "list of programs returned",
+            "description": "return a list of installed programs",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "image_id": {
+                        "type": "string"
+                      },
+                      "icon_path": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/program/{id}/info": {
+      "get": {
+        "summary": "Get information about a program",
+        "tags": [
+          "Program"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return information about the specified program",
             "schema": {
               "type": "object",
               "properties": {
@@ -33,16 +94,16 @@
                       "type": "string"
                     },
                     "image_id": {
-                      "type": "integer"
+                      "type": "string"
                     },
                     "icon_path": {
                       "type": "string"
                     },
                     "created_at": {
-                      "type": "date"
+                      "type": "string"
                     },
                     "updated_at": {
-                      "type": "date"
+                      "type": "string"
                     }
                   }
                 },
