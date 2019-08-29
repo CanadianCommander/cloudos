@@ -36,7 +36,7 @@ describe 'CloudOS API' do
     end
   end
 
-  path '/api/system/program/{id}/info' do
+  path '/api/system/program/{id}' do
     get 'Get information about a program' do
       tags 'Program'
       produces 'application/json'

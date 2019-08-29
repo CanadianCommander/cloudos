@@ -12,7 +12,12 @@ Rails.application.routes.draw do
   namespace :api do
     get '/system/programs/list', to: 'system/program#list_programs'
     scope '/system/program/:id' do
-      get '/info', to: 'system/program#get_program_info'
+      get '/', to: 'system/program#get_program_info'
+
+    end
+
+    scope '/system/program/install' do
+      post '/git', to: 'system/program#install_program_from_git'
     end
   end
 

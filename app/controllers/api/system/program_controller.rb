@@ -1,10 +1,11 @@
 class Api::System::ProgramController < Api::ApiController
 
+  # GET /programs/list
   def list_programs
-    res = success_response(ProgramManagerService.instance.get_installed_programs)
-    render json: res
+    render json: success_response(ProgramManagerService.instance.get_installed_programs)
   end
 
+  # GET /program/:id
   def get_program_info
     begin
       program = ProgramManagerService.instance.get_program(params[:id])
@@ -14,4 +15,12 @@ class Api::System::ProgramController < Api::ApiController
     end
   end
 
+  # POST /program/install/git
+  def install_program_from_git
+    if params[:git_url] != nil
+      ProgramManagerService.instance.install_from_git(params[:git_url])
+    else
+      render json: error_response("Required parameter git_url not provided"), status: 400
+    end
+  end
 end
