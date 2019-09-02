@@ -58,4 +58,7 @@ node_modules/
 yarn-debug.log*
 .yarn-integrity
 
+# intellij 
 .idea/
+.generators 
+.rakeTasks
