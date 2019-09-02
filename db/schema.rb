@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2019_08_29_034603) do
 
   create_table "resources", force: :cascade do |t|
     t.string "path"
-    t.integer "type"
+    t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["path"], name: "index_resources_on_path", unique: true

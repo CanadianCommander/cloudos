@@ -74,4 +74,45 @@ describe 'CloudOS API' do
       end
     end
   end
+
+  path '/api/system/program/install/git' do
+    post 'install program from git by url' do
+      tags 'Program'
+      produces 'application/json'
+      consumes 'application/json'
+
+      parameter name: :install_params, in: :body, schema: {
+          type: :object,
+          properties: {
+            git_url: {type: :string, description: 'The git url from which the new application will be installed'}
+          }
+      }
+
+      response '200', 'return new program object' do
+        schema type: :object,
+           properties: {
+             status: {type: :string},
+             data: {type: :object,
+                properties: {
+                  id: {type: :integer},
+                  name: {type: :string},
+                  image_id: {type: :string},
+                  icon_path: {type: :string},
+                  created_at: {type: :string},
+                  updated_at: {type: :string}
+                }
+             },
+             message: {type: :string}
+           }
+
+        let(:install_params) {{git_url: 'https://foobar/test123.git'}}
+        run_test! do |response|
+          json = (JSON.parse response.body).deep_symbolize_keys
+
+          expect(json[:data][:name]).to eql('test123')
+        end
+
+      end
+    end
+  end
 end

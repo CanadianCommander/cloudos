@@ -35,5 +35,8 @@ module Cloudos
 
     # use custom proxy middleware
     config.middleware.use AppProxy
+
+    # active record update time / created time, time zone
+    config.active_record.default_timezone = :utc
   end
 end

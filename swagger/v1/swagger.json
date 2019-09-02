@@ -58,7 +58,7 @@
         }
       }
     },
-    "/api/system/program/{id}/info": {
+    "/api/system/program/{id}": {
       "get": {
         "summary": "Get information about a program",
         "tags": [
@@ -117,6 +117,71 @@
             "description": "no program found with the specified id",
             "schema": {
               "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/program/install/git": {
+      "post": {
+        "summary": "install program from git by url",
+        "tags": [
+          "Program"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "install_params",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "git_url": {
+                  "type": "string",
+                  "description": "The git url from which the new application will be installed"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return new program object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "image_id": {
+                      "type": "string"
+                    },
+                    "icon_path": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }

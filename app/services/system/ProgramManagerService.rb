@@ -18,10 +18,13 @@ class System::ProgramManagerService
 
       # create program record
       new_program = System::Program.new_program(app_name, nil, nil)
-      new_program.save!
 
       # reserve program resource
-      System::ResourceService.instance.create_program_resource(app_name, new_program.id)
+      prog_resource = System::ResourceService.instance.create_program_resource(app_name, new_program.id)
+      Fs::FileService.instance.insure_path_empty(prog_resource)
+
+      return new_program
     end
   end
 end
+
