@@ -1,6 +1,6 @@
 require 'singleton'
 
-class Api::System::ProgramManagerService
+class System::ProgramManagerService
   include Singleton
 
   # return a list of install programs
@@ -21,7 +21,7 @@ class Api::System::ProgramManagerService
       new_program.save!
 
       # reserve program resource
-      Api::System::ResourceService.instance.create_program_resource(app_name, new_program.id)
+      System::ResourceService.instance.create_program_resource(app_name, new_program.id)
     end
   end
 end

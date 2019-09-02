@@ -1,4 +1,4 @@
-module Api::JsonService
+module JsonService
   # json response status codes
   module STATUS
     OK      = 'ok'.freeze

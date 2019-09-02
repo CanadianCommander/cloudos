@@ -1,6 +1,6 @@
 require 'singleton'
 
-class Api::System::ResourceService
+class System::ResourceService
   include Singleton
 
   PROGRAM_INSTALL_DIR = '/var/cloudos/install/'.freeze()
