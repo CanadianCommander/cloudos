@@ -23,6 +23,8 @@ class System::ProgramManagerService
       prog_resource = System::ResourceService.instance.create_program_resource(app_name, new_program.id)
       Fs::FileService.instance.insure_path_empty(prog_resource)
 
+      System::InstallationService.instance.git_install(new_program, prog_resource, git_url)
+
       return new_program
     end
   end

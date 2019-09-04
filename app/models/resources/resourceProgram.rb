@@ -9,6 +9,6 @@ module Resources
       end
     end
 
-    has_one :program_resource, :class_name => 'System::ProgramResource', :foreign_key => "resource_id"
+    has_one :program_resource, :class_name => 'System::ProgramResource', :foreign_key => "resource_id", :dependent => :destroy
   end
 end
