@@ -104,14 +104,6 @@ describe 'CloudOS API' do
              },
              message: {type: :string}
            }
-
-        let(:install_params) {{git_url: 'https://foobar/test123.git'}}
-        run_test! do |response|
-          json = (JSON.parse response.body).deep_symbolize_keys
-
-          expect(json[:data][:name]).to eql('test123')
-        end
-
       end
     end
   end
