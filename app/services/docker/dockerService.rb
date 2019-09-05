@@ -14,7 +14,7 @@ class Docker::DockerService
   end
 
   def get_all_image_ids
-    ids = Util.cmd("docker", "images", "--all", "--quiet").split("\n")
+    ids = Util.cmd("docker", "images", "--all", "--quiet", "--no-trunc").split("\n")
   end
 
   def delete_image(image_id)
