@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_29_034603) do
+ActiveRecord::Schema.define(version: 2019_09_06_023156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "program_containers", force: :cascade do |t|
+    t.integer "program_id"
+    t.string "container_id"
+    t.integer "status"
+    t.string "ip"
+  end
 
   create_table "program_resources", force: :cascade do |t|
     t.integer "program_id"
@@ -48,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_08_29_034603) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "program_containers", "programs"
   add_foreign_key "program_resources", "programs"
   add_foreign_key "program_resources", "resources"
 end

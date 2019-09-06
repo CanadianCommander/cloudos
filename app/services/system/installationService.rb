@@ -6,15 +6,12 @@ class System::InstallationService
   # install via git
   def git_install(program, resource, git_url)
     begin
-      begin
-        Util.cmd("git", "ls-remote", "-h", git_url)
-      rescue RuntimeError => e
+      unless Git::GitService.instance.valid_git_url?(git_url)
         raise ArgumentError.new("Git url is invalid or cannot be reached.")
       end
 
-      res = Util.cmd("git", "clone", git_url, resource.path)
-
-      program.image_id = Docker::DockerService.instance.build_image_from_docker_file(resource.path)
+      Git::GitService.instance.clone(git_url, resource.path)
+      program.image_id = Docker::DockerService.instance.build_docker_image_from_src(resource.path)
       program.save!
     rescue Exception => e
       Fs::FileService.instance.delete_resource(resource)

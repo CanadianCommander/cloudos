@@ -1,5 +1,6 @@
 module Resources
   class ResourceProgram < Resource
+    has_one :program_resource, :class_name => 'System::ProgramResource', :foreign_key => "resource_id", :dependent => :destroy
 
     def self.new_resource_program(program_id, path)
       ActiveRecord::Base.transaction do
@@ -9,6 +10,5 @@ module Resources
       end
     end
 
-    has_one :program_resource, :class_name => 'System::ProgramResource', :foreign_key => "resource_id", :dependent => :destroy
   end
 end
