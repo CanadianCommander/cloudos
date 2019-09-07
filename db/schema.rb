@@ -15,16 +15,26 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "program_containers", force: :cascade do |t|
-    t.integer "program_id"
+  create_table "containers", force: :cascade do |t|
     t.string "container_id"
     t.integer "status"
     t.string "ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "program_containers", force: :cascade do |t|
+    t.integer "program_id"
+    t.integer "container_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "program_resources", force: :cascade do |t|
     t.integer "program_id"
     t.integer "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "programs", force: :cascade do |t|
@@ -55,6 +65,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "program_containers", "containers"
   add_foreign_key "program_containers", "programs"
   add_foreign_key "program_resources", "programs"
   add_foreign_key "program_resources", "resources"

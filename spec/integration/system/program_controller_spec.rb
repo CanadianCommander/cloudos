@@ -95,6 +95,58 @@ describe 'CloudOS API' do
     end
   end
 
+  path '/api/system/program/{id}/start' do
+    post 'start a container for the given program. (i.e. start a new instance of this program)' do
+      tags 'Program'
+      produces 'application/json'
+      consumes 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'return the new container created from this program' do
+        schema type: :object,
+               properties: {
+                 status: {type: :string},
+                 data: {
+                   '$ref' => '#/definitions/program_container_to1'
+                 },
+                 message: {type: :string}
+               }
+        no_test!
+      end
+
+      response '400', 'program id invalid' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) {42}
+        run_test!
+      end
+    end
+  end
+
+  path '/api/system/program/{id}/stop' do
+    post 'stop all containers related to this instance' do
+      tags 'Program'
+      produces 'application/json'
+      consumes 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'Ok response if all containers destroyed' do
+        schema type: :object,
+               properties: {
+                 status: {type: :string},
+                 data: {},
+                 message: {type: :string}
+               }
+        no_test!
+      end
+
+      response '400', 'program id invalid' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) {42}
+        run_test!
+      end
+    end
+  end
+
   path '/api/system/program/install/git' do
     post 'install program from git by url' do
       tags 'Program'

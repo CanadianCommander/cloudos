@@ -26,7 +26,11 @@ class Api::System::ProgramController < Api::ApiController
   # get a list of all containers associated with this program
   def get_containers
     begin
-      render json: success_response(@program_manager_service.get_program(params[:id]).program_containers)
+      out = []
+      @program_manager_service.get_program(params[:id]).program_containers.each do |prog_c|
+        out << prog_c.container
+      end
+      render json: success_response(out)
     rescue ActiveRecord::RecordNotFound => e
       render json: error_response("Program #{params[:id]} not found"), status: 400
     end
@@ -51,8 +55,8 @@ class Api::System::ProgramController < Api::ApiController
   def stop_program
     begin
       program = @program_manager_service.get_program(params[:id])
-      program.program_containers.each do |container|
-        container.destroy
+      program.program_containers.each do |container_ref|
+        container_ref.destroy
       end
       render json: success_response({})
     rescue ActiveRecord::RecordNotFound => e

@@ -56,7 +56,12 @@ class Docker::DockerService
 
   # stop a container
   def suspend_container (container_id)
-    Util.cmd("docker", "container", "stop", container_id).strip
+    Util.cmd_timeout(60,"docker", "container", "stop", container_id).strip
+  end
+
+  # like suspend but forces the container off
+  def kill_container(container_id)
+    Util.cmd_timeout(60,"docker", "container", "kill", container_id).strip
   end
 
   # start a container
