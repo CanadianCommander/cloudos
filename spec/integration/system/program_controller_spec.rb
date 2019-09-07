@@ -112,13 +112,12 @@ describe 'CloudOS API' do
         schema type: :object,
            properties: {
              status: {type: :string},
-             data: {type: :object,
-                properties: {
+             data: {
                   '$ref' => '#/definitions/program_to1'
-                }
              },
              message: {type: :string}
            }
+        no_test!
       end
     end
   end

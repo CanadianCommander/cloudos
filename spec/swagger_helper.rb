@@ -54,4 +54,12 @@ RSpec.configure do |config|
       }.merge!(yaml_hash)
     }
   }
+
+  # thanks rheasunshine@github
+  def no_test!
+
+    it 'rswag ignores specs without tests, preventing them from showing in swagger doc' do |example|
+      # there is an open pull request to fix this
+    end
+  end
 end

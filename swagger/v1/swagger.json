@@ -128,6 +128,54 @@
           }
         }
       }
+    },
+    "/api/system/program/install/git": {
+      "post": {
+        "summary": "install program from git by url",
+        "tags": [
+          "Program"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "install_params",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "git_url": {
+                  "type": "string",
+                  "description": "The git url from which the new application will be installed"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return new program object",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/program_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -175,6 +223,12 @@
           "type": "string"
         },
         "ip": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "update_at": {
           "type": "string"
         }
       }
