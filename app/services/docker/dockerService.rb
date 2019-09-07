@@ -3,6 +3,8 @@ require 'singleton'
 class Docker::DockerService
   include Singleton
 
+  #========================== IMAGE ==================================#
+
   # builds a new docker image from the specified directory and return new image id
   def build_docker_image_from_src (docker_path)
     docker_image_id = Util.cmd("docker", "build", docker_path, "--force-rm=true", "--quiet").match(/:([\d\w]*)/)
@@ -39,6 +41,8 @@ class Docker::DockerService
       end
     end
   end
+
+  #========================== CONTAINER ===============================#
 
   # create a new container from this image and returns the container id.
   def create_container (image_id)

@@ -1,10 +1,22 @@
 require 'rails_helper'
+require 'yaml'
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.to_s + '/swagger'
+
+  # load external swagger definition files
+  yaml_files = [
+    "spec/transfer_object/program_container.yml",
+    "spec/transfer_object/program.yml"
+  ]
+  yaml_hash = {}
+  yaml_files.each do |path|
+    yaml_hash.merge!(YAML.load(File.open(path)))
+  end
+  yaml_hash.deep_symbolize_keys!
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:to_swagger' rake task, the complete Swagger will
@@ -39,7 +51,7 @@ RSpec.configure do |config|
             message: {type: :string},
           }
         }
-      }
+      }.merge!(yaml_hash)
     }
   }
 end

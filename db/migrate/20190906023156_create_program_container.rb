@@ -5,6 +5,7 @@ class CreateProgramContainer < ActiveRecord::Migration[6.0]
       t.string  :container_id
       t.integer :status
       t.string  :ip
+      t.timestamps
     end
     add_foreign_key :program_containers, :programs
   end

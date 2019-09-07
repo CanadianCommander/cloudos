@@ -11,15 +11,8 @@ describe 'CloudOS API' do
           properties: {
             status: {type: :string},
             data: {type: :array,
-              items: {type: :object,
-                  properties: {
-                  id: {type: :integer},
-                  name: {type: :string},
-                  image_id: {type: :string},
-                  icon_path: {type: :string},
-                  created_at: {type: :string},
-                  updated_at: {type: :string}
-                }
+              items: {
+                '$ref' => '#/definitions/program_to1'
               }
             },
             message: {type: :string}
@@ -46,15 +39,8 @@ describe 'CloudOS API' do
         schema type: :object,
           properties: {
             status: {type: :string},
-            data: {type: :object,
-                properties: {
-                id: {type: :integer},
-                name: {type: :string},
-                image_id: {type: :string},
-                icon_path: {type: :string},
-                created_at: {type: :string},
-                updated_at: {type: :string}
-              }
+            data: {
+              '$ref' => '#/definitions/program_to1'
             },
             message: {type: :string}
           }
@@ -70,6 +56,40 @@ describe 'CloudOS API' do
       response '400', 'no program found with the specified id' do
         schema '$ref' => '#/definitions/error_response'
         let(:id) { 4 }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/system/program/{id}/containers' do
+    get "get all containers associated with this program" do
+      tags 'Program'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'returns a list of containers' do
+        schema type: :object,
+         properties: {
+           status: {type: :string},
+           data: {type: :array,
+                  items: {
+                    '$ref' => '#/definitions/program_container_to1'
+                  }
+           },
+           message: {type: :string}
+         }
+
+
+        let(:id) { 1 }
+        run_test! do |res|
+          json = (JSON.parse res.body).deep_symbolize_keys
+          expect(json[:data].size).to eql(2)
+        end
+      end
+
+      response '400', 'program id invalid' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) {42}
         run_test!
       end
     end
@@ -94,12 +114,7 @@ describe 'CloudOS API' do
              status: {type: :string},
              data: {type: :object,
                 properties: {
-                  id: {type: :integer},
-                  name: {type: :string},
-                  image_id: {type: :string},
-                  icon_path: {type: :string},
-                  created_at: {type: :string},
-                  updated_at: {type: :string}
+                  '$ref' => '#/definitions/program_to1'
                 }
              },
              message: {type: :string}
@@ -107,4 +122,6 @@ describe 'CloudOS API' do
       end
     end
   end
+
+
 end

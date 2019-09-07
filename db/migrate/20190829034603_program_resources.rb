@@ -3,6 +3,7 @@ class ProgramResources < ActiveRecord::Migration[6.0]
     create_table :program_resources do |t|
       t.integer :program_id
       t.integer :resource_id
+      t.timestamps
     end
     add_foreign_key :program_resources, :programs
     add_foreign_key :program_resources, :resources

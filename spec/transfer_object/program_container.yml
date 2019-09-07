@@ -1,0 +1,17 @@
+program_container_to1:
+  type: :object
+  properties:
+    id:
+      type: :integer
+    program_id:
+      type: :integer
+    container_id:
+      type: :string
+    status:
+      type: :string
+    ip:
+      type: :string
+    created_at:
+      type: :string
+    update_at:
+      type: :string

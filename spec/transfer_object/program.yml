@@ -1,0 +1,15 @@
+program_to1:
+  type: :object
+  properties:
+    id:
+      type: integer
+    name:
+      type: :string
+    image_id:
+      type: :string
+    icon_path:
+      type: :string
+    created_at:
+      type: :string
+    update_at:
+      type: :string
