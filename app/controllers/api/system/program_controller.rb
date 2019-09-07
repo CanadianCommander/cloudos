@@ -36,10 +36,10 @@ class Api::System::ProgramController < Api::ApiController
     end
   end
 
-  # POST /program/:id/start
+  # PUT /program/:id/start
   # start a program. i.e. create a new container from the image of this program
   # and return the new container
-  def start_program
+  def fork_program
     begin
       program = @program_manager_service.get_program(params[:id])
       new_container = @container_service.create_container(program)
@@ -49,10 +49,10 @@ class Api::System::ProgramController < Api::ApiController
     end
   end
 
-  # POST /program/:id/stop
+  # PUT /program/:id/stop
   # stops all running containers for this program. It is more likely that
   # one would wish to stop a particular container instead.
-  def stop_program
+  def kill_program
     begin
       program = @program_manager_service.get_program(params[:id])
       program.program_containers.each do |container_ref|

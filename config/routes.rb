@@ -14,12 +14,23 @@ Rails.application.routes.draw do
     scope '/system/program/:id' do
       get '/', to: 'system/program#get_program_info'
       get '/containers', to: 'system/program#get_containers'
-      post '/start', to: 'system/program#start_program'
-      post '/stop', to: 'system/program#stop_program'
+      put '/fork', to: 'system/program#fork_program'
+      put '/kill', to: 'system/program#kill_program'
     end
 
     scope '/system/program/install' do
       post '/git', to: 'system/program#install_program_from_git'
+    end
+
+    scope '/system/containers/' do
+      get '/list', to: 'system/container#list_containers'
+    end
+
+    scope '/system/container/:id' do
+      get '/', to: 'system/container#get_container'
+      put '/suspend', to: 'system/container#suspend_container'
+      put '/resume', to: 'system/container#resume_container'
+      delete '/destroy', to: 'system/container#destroy_container'
     end
   end
 

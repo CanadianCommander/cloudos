@@ -33,8 +33,6 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
   create_table "program_resources", force: :cascade do |t|
     t.integer "program_id"
     t.integer "resource_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "programs", force: :cascade do |t|

@@ -5,6 +5,227 @@
     "version": "v1"
   },
   "paths": {
+    "/api/system/containers/list": {
+      "get": {
+        "summary": "Get a list of all containers on the system",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Omit this parameter to search all containers.\n                              If present only containers of the specified status are returned.",
+            "enum": [
+              "running",
+              "suspended"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return a list of containers",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/container_to1"
+                  }
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/container/{id}": {
+      "get": {
+        "summary": "Get information about a container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return information about the specified container",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/container_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/container/{id}/resume": {
+      "put": {
+        "summary": "resume a container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return information about the resumed container",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/container_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/container/{id}/suspend": {
+      "put": {
+        "summary": "suspend a container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return information about the suspended container",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/container_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/container/{id}/destroy": {
+      "delete": {
+        "summary": "delete a container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok response if container successfully destroyed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
     "/api/system/programs/list": {
       "get": {
         "summary": "Get a list of install programs",
@@ -111,7 +332,7 @@
                 "data": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/program_container_to1"
+                    "$ref": "#/definitions/container_to1"
                   }
                 },
                 "message": {
@@ -129,8 +350,8 @@
         }
       }
     },
-    "/api/system/program/{id}/start": {
-      "post": {
+    "/api/system/program/{id}/fork": {
+      "put": {
         "summary": "start a container for the given program. (i.e. start a new instance of this program)",
         "tags": [
           "Program"
@@ -159,7 +380,7 @@
                   "type": "string"
                 },
                 "data": {
-                  "$ref": "#/definitions/program_container_to1"
+                  "$ref": "#/definitions/container_to1"
                 },
                 "message": {
                   "type": "string"
@@ -176,8 +397,8 @@
         }
       }
     },
-    "/api/system/program/{id}/stop": {
-      "post": {
+    "/api/system/program/{id}/kill": {
+      "put": {
         "summary": "stop all containers related to this instance",
         "tags": [
           "Program"
@@ -300,7 +521,7 @@
         }
       }
     },
-    "program_container_to1": {
+    "container_to1": {
       "type": "object",
       "properties": {
         "id": {

@@ -73,7 +73,7 @@ describe 'CloudOS API' do
            status: {type: :string},
            data: {type: :array,
                   items: {
-                    '$ref' => '#/definitions/program_container_to1'
+                    '$ref' => '#/definitions/container_to1'
                   }
            },
            message: {type: :string}
@@ -95,8 +95,8 @@ describe 'CloudOS API' do
     end
   end
 
-  path '/api/system/program/{id}/start' do
-    post 'start a container for the given program. (i.e. start a new instance of this program)' do
+  path '/api/system/program/{id}/fork' do
+    put 'start a container for the given program. (i.e. start a new instance of this program)' do
       tags 'Program'
       produces 'application/json'
       consumes 'application/json'
@@ -107,7 +107,7 @@ describe 'CloudOS API' do
                properties: {
                  status: {type: :string},
                  data: {
-                   '$ref' => '#/definitions/program_container_to1'
+                   '$ref' => '#/definitions/container_to1'
                  },
                  message: {type: :string}
                }
@@ -122,8 +122,8 @@ describe 'CloudOS API' do
     end
   end
 
-  path '/api/system/program/{id}/stop' do
-    post 'stop all containers related to this instance' do
+  path '/api/system/program/{id}/kill' do
+    put 'stop all containers related to this instance' do
       tags 'Program'
       produces 'application/json'
       consumes 'application/json'

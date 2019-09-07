@@ -9,7 +9,7 @@ RSpec.configure do |config|
 
   # load external swagger definition files
   yaml_files = [
-    "spec/transfer_object/program_container.yml",
+    "spec/transfer_object/container.yml",
     "spec/transfer_object/program.yml"
   ]
   yaml_hash = {}
@@ -61,5 +61,13 @@ RSpec.configure do |config|
     it 'rswag ignores specs without tests, preventing them from showing in swagger doc' do |example|
       # there is an open pull request to fix this
     end
+  end
+
+  def expect_ok(json)
+    expect(json[:status]).to eql("ok")
+  end
+
+  def expect_error(json)
+    expect(json[:status]).to eql("error")
   end
 end

@@ -1,5 +1,6 @@
 class System::Container < ApplicationRecord
   enum status: [:running, :suspended, :unknown]
+  has_one :program_container, :class_name => 'System::ProgramContainer', dependent: :destroy
 
   # create a new container record and relate it to a program
   def self.new_program_container(program_id, container_id)
