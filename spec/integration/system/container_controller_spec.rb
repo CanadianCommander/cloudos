@@ -129,7 +129,7 @@ describe 'CloudOS API' do
     end
   end
 
-  path '/api/system/container/{id}/destroy' do
+  path '/api/system/container/{id}' do
     delete 'delete a container' do
       tags 'Container'
       produces 'application/json'

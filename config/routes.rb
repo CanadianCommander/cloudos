@@ -30,7 +30,22 @@ Rails.application.routes.draw do
       get '/', to: 'system/container#get_container'
       put '/suspend', to: 'system/container#suspend_container'
       put '/resume', to: 'system/container#resume_container'
-      delete '/destroy', to: 'system/container#destroy_container'
+      delete '/', to: 'system/container#destroy_container'
+    end
+
+    scope '/system/proxy/:id' do
+      get '/', to: 'system/proxy#get_proxy'
+      put '/', to: 'system/proxy#update_proxy'
+      delete '/', to: 'system/proxy#destroy_proxy'
+    end
+
+    scope '/system/proxies/' do
+      get '/list', to: 'system/proxy#list_proxies'
+    end
+
+    scope '/system/proxy' do
+      post '/', to: 'system/proxy#create_proxy'
+      post '/container', to: 'system/proxy#create_container_proxy'
     end
   end
 

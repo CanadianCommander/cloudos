@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_023156) do
+ActiveRecord::Schema.define(version: 2019_09_08_003338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "container_proxies", force: :cascade do |t|
+    t.integer "container_id"
+    t.integer "proxy_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "containers", force: :cascade do |t|
     t.string "container_id"
@@ -33,6 +40,8 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
   create_table "program_resources", force: :cascade do |t|
     t.integer "program_id"
     t.integer "resource_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "programs", force: :cascade do |t|
@@ -41,6 +50,18 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
     t.string "icon_path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "proxies", force: :cascade do |t|
+    t.integer "external_port"
+    t.integer "internal_port"
+    t.string "internal_ip"
+    t.integer "proto"
+    t.integer "proxy_type"
+    t.integer "ttl_sec"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["external_port"], name: "index_proxies_on_external_port", unique: true
   end
 
   create_table "resources", force: :cascade do |t|
@@ -63,6 +84,8 @@ ActiveRecord::Schema.define(version: 2019_09_06_023156) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "container_proxies", "containers"
+  add_foreign_key "container_proxies", "proxies"
   add_foreign_key "program_containers", "containers"
   add_foreign_key "program_containers", "programs"
   add_foreign_key "program_resources", "programs"

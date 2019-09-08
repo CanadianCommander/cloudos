@@ -19,15 +19,19 @@ class AppProxy < Rack::Proxy
   def rewrite_env(env)
     request = Rack::Request.new(env)
     # proxy logic
-    if (request.port >= Rails.application.config.proxy[:app_port_star] && request.port <= Rails.application.config.proxy[:app_port_end])
+    if request.port >= Rails.application.config.proxy[:app_port_star] && request.port <= Rails.application.config.proxy[:app_port_end]
       if request.path =~ /^#{Rails.application.config.proxy[:reserved_path]}.*/
         Rails.logger.debug "Proxy to /cloudos/ path"
         # TODO route to cloudos controller(s)
       else
-        Rails.logger.debug "Proxy to application on port #{request.port}"
-        # TODO proxy to real application
-        env['PATH_INFO'] = "/"
-        env['HTTP_HOST'] = "localhost:80"
+        proxy = System::ProxyService.instance.get_proxy_by_external_port(request.port)
+
+        if proxy.nil?
+          Rails.logger.warn "No proxy record found for: #{request.port}"
+        else
+          env['HTTP_HOST'] = "#{proxy.internal_ip}:#{proxy.internal_port}"
+          env['rack.url_scheme'] = proxy.proto.to_s
+        end
       end
     else
       Rails.logger.debug "No Proxy, continue to api"
