@@ -71,7 +71,9 @@ class AppProxy < Rack::Proxy
   # perform websocket proxy
   def perform_ws_proxy(env, proxy)
     client_request = Rack::Request.new(env)
+    # client of the web socket proxy
     ws_client = Faye::WebSocket.new(env)
+    # server of the web socket proxy
     ws_server = Faye::WebSocket::Client.new("#{proxy_proto_to_ws_proto(proxy)}://#{proxy.internal_ip}:#{proxy.internal_port}#{client_request.fullpath}")
 
     ws_server.on :message do |event|

@@ -23,6 +23,7 @@ describe 'CloudOS API' do
              message: {type: :string}
            }
 
+        let(:status) { :running }
         run_test! do
           json = (JSON.parse response.body).deep_symbolize_keys
 
