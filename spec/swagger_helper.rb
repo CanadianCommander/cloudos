@@ -10,7 +10,8 @@ RSpec.configure do |config|
   # load external swagger definition files
   yaml_files = [
     "spec/transfer_object/container.yml",
-    "spec/transfer_object/program.yml"
+    "spec/transfer_object/program.yml",
+    "spec/transfer_object/proxy.yml"
   ]
   yaml_hash = {}
   yaml_files.each do |path|

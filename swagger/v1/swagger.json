@@ -47,6 +47,12 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "status invalid",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
           }
         }
       }
@@ -79,6 +85,47 @@
                 },
                 "data": {
                   "$ref": "#/definitions/container_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no program found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok response if container successfully destroyed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
                 },
                 "message": {
                   "type": "string"
@@ -167,49 +214,6 @@
                 },
                 "data": {
                   "$ref": "#/definitions/container_to1"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "no program found with the specified id",
-            "schema": {
-              "$ref": "#/definitions/error_response"
-            }
-          }
-        }
-      }
-    },
-    "/api/system/container/{id}/destroy": {
-      "delete": {
-        "summary": "delete a container",
-        "tags": [
-          "Container"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ok response if container successfully destroyed",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string"
-                },
-                "data": {
                 },
                 "message": {
                   "type": "string"
@@ -490,6 +494,310 @@
           }
         }
       }
+    },
+    "/api/system/proxies/list": {
+      "get": {
+        "summary": "Get a list of all proxies on the system",
+        "tags": [
+          "Proxy"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "return a list of proxies",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/proxy_to1"
+                  }
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/proxy/": {
+      "post": {
+        "summary": "create a new proxy",
+        "tags": [
+          "Proxy"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "proxy_def",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "int_port": {
+                  "type": "integer"
+                },
+                "ip": {
+                  "type": "string"
+                },
+                "proto": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "type"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the newly created proxy",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/proxy_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/proxy/container": {
+      "post": {
+        "summary": "create a new proxy for the specified container. This proxy is linked to the container and will be deleted if the container is deleted",
+        "tags": [
+          "Proxy"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "proxy_def",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "int_port": {
+                  "type": "integer"
+                },
+                "container_id": {
+                  "type": "integer"
+                },
+                "proto": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "type"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the newly created proxy",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/proxy_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/system/proxy/{id}": {
+      "get": {
+        "summary": "get a proxy",
+        "tags": [
+          "Proxy"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the proxy",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/proxy_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid proxy id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a proxy",
+        "tags": [
+          "Proxy"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "proxy_def",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "int_port": {
+                  "type": "integer",
+                  "required": false
+                },
+                "ip": {
+                  "type": "string",
+                  "required": false
+                },
+                "proto": {
+                  "type": "string",
+                  "required": false
+                },
+                "type": {
+                  "type": "type",
+                  "required": false
+                },
+                "ttl": {
+                  "type": "integer",
+                  "required": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the updated proxy",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/proxy_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid proxy id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a proxy",
+        "tags": [
+          "Proxy"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid proxy id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -561,6 +869,46 @@
         },
         "icon_path": {
           "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "update_at": {
+          "type": "string"
+        }
+      }
+    },
+    "proxy_to1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "external_port": {
+          "type": "integer"
+        },
+        "internal_port": {
+          "type": "integer"
+        },
+        "internal_ip": {
+          "type": "string"
+        },
+        "proto": {
+          "type": "string",
+          "enum": [
+            "http",
+            "https"
+          ]
+        },
+        "proxy_type": {
+          "type": "string",
+          "enum": [
+            "static",
+            "transient"
+          ]
+        },
+        "ttl_esc": {
+          "type": "integer"
         },
         "created_at": {
           "type": "string"

@@ -40,7 +40,7 @@ class Api::System::ProxyController < Api::ApiController
       end
       render json: success_response(@proxy_service.create_container_proxy(params[:container_id], params[:int_port], params[:proto], params[:type], params[:ttl]))
     rescue ActiveRecord::RecordNotFound => e
-      render json: error_response("Container id invalid, [#{params[:container_id]}].")
+      render json: error_response("Container id invalid, [#{params[:container_id]}]."), status: 400
     end
   end
 
@@ -61,7 +61,7 @@ class Api::System::ProxyController < Api::ApiController
       @proxy_service.destroy_proxy(params[:id])
       render json: success_response({})
     rescue ActiveRecord::RecordNotFound => e
-      render json: error_response("Proxy [#{params[:id]}] not found")
+      render json: error_response("Proxy [#{params[:id]}] not found"), status: 400
     end
   end
 
@@ -71,7 +71,7 @@ class Api::System::ProxyController < Api::ApiController
     begin
       render json: success_response(@proxy_service.update_proxy(params[:id], params[:int_port], params[:ip], params[:proto], params[:type], params[:ttl]))
     rescue ActiveRecord::RecordNotFound => e
-      render json: error_response("Proxy [#{params[:id]}] not found")
+      render json: error_response("Proxy [#{params[:id]}] not found"), status: 400
     end
   end
 

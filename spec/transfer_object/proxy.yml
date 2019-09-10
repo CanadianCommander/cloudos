@@ -1,0 +1,23 @@
+proxy_to1:
+  type: object
+  properties:
+    id:
+      type: integer
+    external_port:
+      type: integer
+    internal_port:
+      type: integer
+    internal_ip:
+      type: string
+    proto:
+      type: string
+      enum: [http, https]
+    proxy_type:
+      type: string
+      enum: [static, transient]
+    ttl_esc:
+      type: integer
+    created_at:
+      type: string
+    update_at:
+      type: string

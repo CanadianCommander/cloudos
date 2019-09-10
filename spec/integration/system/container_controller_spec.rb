@@ -31,6 +31,15 @@ describe 'CloudOS API' do
           expect(json[:data].size).to eql(3)
         end
       end
+
+      response '400', 'status invalid' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:status) {:fizbang}
+        run_test! do
+          json = (JSON.parse response.body).deep_symbolize_keys
+          expect_error(json)
+        end
+      end
     end
   end
 
