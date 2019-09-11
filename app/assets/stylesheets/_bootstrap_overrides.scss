@@ -1,0 +1,22 @@
+// override bootstrap variables in this file
+$grid-breakpoints: (
+  // Extra small screen / phone
+        xs: 0,
+  // Small screen / phone
+        sm: 576px,
+  // Medium screen / tablet
+        md: 768px,
+  // Large screen / desktop
+        lg: 992px,
+  // Extra large screen / wide desktop
+        xl: 1400px
+);
+
+.btn-primary {
+  background-color: $primary_color;
+  color: $text_primary_inv;
+
+  &:hover {
+    background-color: darken($primary_color, 20%);
+  }
+}

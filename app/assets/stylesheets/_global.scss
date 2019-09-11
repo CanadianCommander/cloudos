@@ -1,0 +1,27 @@
+body {
+  background-color: $primary_bg;
+  color: $text_primary;
+  font-family: "Open Sans Condensed", serif;
+
+  h1 {
+    font-size: 52px;
+
+    &.text-pop {
+      font-size: 74px;
+    }
+
+    .text-pop {
+      font-size: 74px;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    height: 74px;
+    bottom: 30px;
+    left: 50px;
+    right: 50px;
+
+    margin: 20px;
+  }
+}
