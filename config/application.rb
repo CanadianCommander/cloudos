@@ -22,6 +22,8 @@ module Cloudos
 
     # custom proxy settings
     config.proxy = {
+      # api port
+      api_port: 443,
       # start of app port range, inclusive
       app_port_star: 4000,
       # end of app port range, inclusive

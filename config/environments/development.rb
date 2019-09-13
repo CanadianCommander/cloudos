@@ -68,4 +68,7 @@ Rails.application.configure do
 
   # cannot IO watch on NSF mount
   config.file_watcher = ActiveSupport::FileUpdateChecker
+
+  # start api on port 3000 in dev mode.
+  config.proxy[:api_port] = 3000
 end

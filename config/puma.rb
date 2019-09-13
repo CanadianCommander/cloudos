@@ -11,7 +11,7 @@ threads min_threads_count, max_threads_count
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
 # api port
-bind "tcp://0.0.0.0:#{ENV.fetch("PORT") { 3000 }}"
+bind "tcp://0.0.0.0:#{ENV.fetch("PORT") { Rails.application.config.proxy[:api_port] }}"
 
 # app ports
 (Rails.application.config.proxy[:app_port_star]..Rails.application.config.proxy[:app_port_end]).each do |port|

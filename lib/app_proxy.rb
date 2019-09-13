@@ -1,10 +1,15 @@
 require 'rack-proxy'
 require 'socket'
 require 'faye/websocket'
+require 'cgi'
+require 'base64'
+require 'active_support'
+require_relative '../app/services/auth/authentication_service'
 
 class AppProxy < Rack::Proxy
   def initialize(app)
     @app = app
+    @hostname = (`hostname`).strip
   end
 
   def call(env)
@@ -12,6 +17,11 @@ class AppProxy < Rack::Proxy
 
     case get_proxy_mode(env)
     when :app_proxy
+      begin
+        check_request_authentication(env)
+      rescue Auth::NotAuthorizedException => e
+        return redirect_to_login(env)
+      end
       proxy = get_proxy(env)
       if proxy.nil?
         ["404", {}, []]
@@ -105,4 +115,16 @@ class AppProxy < Rack::Proxy
     end
   end
 
+  # check if the session is authenticated. i.e. user is logged in.
+  # if not raise NotAuthorizedException
+  def check_request_authentication(env)
+    unless env['warden'].authenticated?
+      raise Auth::NotAuthorizedException.new("Request is not authorized")
+    end
+  end
+
+  def redirect_to_login(env)
+    env["HTTP_HOST"] = "#{@hostname}:#{Rails.application.config.proxy[:api_port]}"
+    perform_request(env)
+  end
 end
