@@ -93,7 +93,7 @@
             }
           },
           "400": {
-            "description": "no program found with the specified id",
+            "description": "no container found with the specified id",
             "schema": {
               "$ref": "#/definitions/error_response"
             }
@@ -134,7 +134,54 @@
             }
           },
           "400": {
-            "description": "no program found with the specified id",
+            "description": "no container found with the specified id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/container/{id}/proxies": {
+      "get": {
+        "summary": "Get proxy list for container",
+        "tags": [
+          "Container"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the list of proxies for this container",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/proxy_to1"
+                  }
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no container found with the specified id",
             "schema": {
               "$ref": "#/definitions/error_response"
             }
@@ -178,7 +225,7 @@
             }
           },
           "400": {
-            "description": "no program found with the specified id",
+            "description": "no container found with the specified id",
             "schema": {
               "$ref": "#/definitions/error_response"
             }
@@ -222,7 +269,7 @@
             }
           },
           "400": {
-            "description": "no program found with the specified id",
+            "description": "no container found with the specified id",
             "schema": {
               "$ref": "#/definitions/error_response"
             }
@@ -834,6 +881,50 @@
           },
           "400": {
             "description": "invalid proxy id",
+            "schema": {
+              "$ref": "#/definitions/error_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/system/proxy/{id}/container": {
+      "get": {
+        "summary": "get the container associated with the proxy",
+        "tags": [
+          "Proxy"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return the associated container",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "data": {
+                  "$ref": "#/definitions/container_to1"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid proxy id or proxy does not have a container",
             "schema": {
               "$ref": "#/definitions/error_response"
             }

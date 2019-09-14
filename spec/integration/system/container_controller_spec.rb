@@ -68,7 +68,45 @@ describe 'CloudOS API' do
         end
       end
 
-      response '400', 'no program found with the specified id' do
+      response '400', 'no container found with the specified id' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) { 42 }
+        run_test! do
+          json = (JSON.parse response.body).deep_symbolize_keys
+          expect_error(json)
+        end
+      end
+    end
+  end
+
+  path '/api/system/container/{id}/proxies' do
+    get 'Get proxy list for container' do
+      tags 'Container'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'return the list of proxies for this container' do
+        schema type: :object,
+               properties: {
+                 status: {type: :string},
+                 data: {type: :array,
+                        items: {
+                          '$ref' => '#/definitions/proxy_to1'
+                        }
+                 },
+                 message: {type: :string}
+               }
+
+        let(:id) { 1 }
+        run_test! do |response|
+          json = (JSON.parse response.body).deep_symbolize_keys
+
+          expect_ok(json)
+          expect(json[:data][0][:internal_ip]).to eql('172.0.0.2')
+        end
+      end
+
+      response '400', 'no container found with the specified id' do
         schema '$ref' => '#/definitions/error_response'
         let(:id) { 42 }
         run_test! do
@@ -98,7 +136,7 @@ describe 'CloudOS API' do
         no_test!
       end
 
-      response '400', 'no program found with the specified id' do
+      response '400', 'no container found with the specified id' do
         schema '$ref' => '#/definitions/error_response'
         let(:id) { 42 }
         run_test! do
@@ -128,7 +166,7 @@ describe 'CloudOS API' do
         no_test!
       end
 
-      response '400', 'no program found with the specified id' do
+      response '400', 'no container found with the specified id' do
         schema '$ref' => '#/definitions/error_response'
         let(:id) { 42 }
         run_test! do
@@ -156,7 +194,7 @@ describe 'CloudOS API' do
         no_test!
       end
 
-      response '400', 'no program found with the specified id' do
+      response '400', 'no container found with the specified id' do
         schema '$ref' => '#/definitions/error_response'
         let(:id) { 42 }
         run_test! do

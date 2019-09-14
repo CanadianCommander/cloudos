@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
     scope '/system/container/:id' do
       get '/', to: 'system/container#get_container'
+      get '/proxies', to: 'system/container#get_container_proxies'
       put '/suspend', to: 'system/container#suspend_container'
       put '/resume', to: 'system/container#resume_container'
       delete '/', to: 'system/container#destroy_container'
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
 
     scope '/system/proxy/:id' do
       get '/', to: 'system/proxy#get_proxy'
+      get '/container', to: 'system/proxy#get_proxy_container'
       put '/', to: 'system/proxy#update_proxy'
       delete '/', to: 'system/proxy#destroy_proxy'
     end

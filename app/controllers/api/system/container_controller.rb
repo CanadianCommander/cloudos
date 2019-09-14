@@ -25,6 +25,15 @@ class Api::System::ContainerController < Api::ApiController
     end
   end
 
+  # GET container/:id/proxies
+  def get_container_proxies
+    begin
+      render json: success_response(@container_service.get_container(params[:id]).container_proxies.map {|proxy| proxy.proxy})
+    rescue ActiveRecord::RecordNotFound => e
+      render json: error_response("no container with id [#{params[:id]} found"), status: 400
+    end
+  end
+
   # PUT container/:id/suspend
   def suspend_container
     begin

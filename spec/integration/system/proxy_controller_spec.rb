@@ -153,6 +153,42 @@ describe 'CloudOS API' do
     end
   end
 
+  path '/api/system/proxy/{id}/container' do
+    get 'get the container associated with the proxy' do
+      tags 'Proxy'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+
+      response '200', 'return the associated container' do
+        schema type: :object,
+               properties: {
+                 status: {type: :string},
+                 data: {
+                   '$ref' => '#/definitions/container_to1'
+                 },
+                 message: {type: :string}
+               }
+
+        let(:id) {1}
+        run_test! do
+          json = (JSON.parse response.body).deep_symbolize_keys
+
+          expect_ok(json)
+          expect(json[:data][:container_id]).to eql("fljkdsfldsfjdkl")
+        end
+      end
+
+      response '400', 'invalid proxy id or proxy does not have a container' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) { 42 }
+        run_test! do
+          json = (JSON.parse response.body).deep_symbolize_keys
+          expect_error(json)
+        end
+      end
+    end
+  end
+
   path '/api/system/proxy/{id}' do
     put 'update a proxy' do
       tags 'Proxy'

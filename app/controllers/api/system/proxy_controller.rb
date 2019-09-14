@@ -55,6 +55,20 @@ class Api::System::ProxyController < Api::ApiController
     end
   end
 
+  # GET /proxy/:id/container
+  def get_proxy_container
+    begin
+      container_proxy = @proxy_service.get_proxy(params[:id]).container_proxy
+      if !container_proxy.nil?
+        render json: success_response(container_proxy.container)
+      else
+        render json: error_response("Proxy [#{params[:id]} does not have an associated container"), status: 400
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      render json: error_response("Proxy [#{params[:id]}] not found"), status: 400
+    end
+  end
+
   # DELETE /proxy/:id
   def destroy_proxy
     begin
