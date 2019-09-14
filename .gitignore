@@ -1,6 +1,7 @@
 *.rbc
 capybara-*.html
 .rspec
+/public/assets/**
 /log
 /tmp
 /db/*.sqlite3
@@ -62,3 +63,4 @@ yarn-debug.log*
 .idea/
 .generators 
 .rakeTasks
+
