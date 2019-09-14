@@ -72,4 +72,13 @@ class Api::System::ProgramController < Api::ApiController
       render json: error_response("Required parameter git_url not provided"), status: 400
     end
   end
+
+  # DELETE /program/:id
+  def delete_program
+    begin
+      render json: success_response(@program_manager_service.delete_program(params[:id]))
+    rescue ActiveRecord::RecordNotFound => e
+      render json: error_response("Could not find program with id, [#{params[:id]}]"), status: 400
+    end
+  end
 end

@@ -174,5 +174,33 @@ describe 'CloudOS API' do
     end
   end
 
+  path '/api/system/program/{id}' do
+    delete 'Delete a program' do
+      tags 'Program'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
 
+      response '200', 'Return the deleted program' do
+        schema type: :object,
+               properties: {
+                 status: {type: :string},
+                 data: {
+                   '$ref' => '#/definitions/program_to1'
+                 },
+                 message: {type: :string}
+               }
+
+        no_test!
+      end
+
+      response '400', 'no program found with the specified id' do
+        schema '$ref' => '#/definitions/error_response'
+        let(:id) { 42 }
+        run_test! do |response|
+          json = (JSON.parse response.body).deep_symbolize_keys
+          expect_error(json)
+        end
+      end
+    end
+  end
 end

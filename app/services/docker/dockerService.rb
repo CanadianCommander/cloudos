@@ -79,6 +79,17 @@ class Docker::DockerService
   end
 
   def get_container_status (container_id)
-    inspect_container(container_id)[:State][:Status]
+    translate_container_status(inspect_container(container_id)[:State][:Status])
+  end
+
+  def translate_container_status(status)
+    case status
+    when "running"
+      return :running
+    when "stopped"
+      return :suspended
+    else
+      return :unknown
+    end
   end
 end

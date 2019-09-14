@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get '/containers', to: 'system/program#get_containers'
       put '/fork', to: 'system/program#fork_program'
       put '/kill', to: 'system/program#kill_program'
+      delete '/', to: 'system/program#delete_program'
     end
 
     scope '/system/program/install' do

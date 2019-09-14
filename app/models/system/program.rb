@@ -7,4 +7,13 @@ class System::Program < ApplicationRecord
     return prog
   end
 
+  before_destroy do |program|
+    begin
+      Docker::DockerService.instance.delete_image(program.image_id)
+    rescue RuntimeError, Timeout::Error => e
+      # log and continue with delete even if there is an error
+      Rails.logger.error("Failed to delete docker image with error: #{e.to_s}\n#{e.backtrace.join("\n")}")
+    end
+  end
+
 end
