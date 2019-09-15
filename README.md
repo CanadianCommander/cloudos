@@ -1,2 +1,6 @@
 # cloudos
-core component of the cloud operating system
+A cloud based operating system.
+
+![dashboard](https://github.com/CanadianCommander/cloudos/doc/dashboardappview.png)
+
+*cloudos dashboard*
