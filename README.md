@@ -1,6 +1,6 @@
 # cloudos
 A cloud based operating system.
 
-![dashboard](https://github.com/CanadianCommander/cloudos/doc/dashboardappview.png)
+![dashboard](https://raw.githubusercontent.com/CanadianCommander/cloudos/master/doc/dashboardappview.png)
 
-*cloudos dashboard*
+*cloudos dashboard concept*
