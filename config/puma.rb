@@ -14,7 +14,7 @@ threads min_threads_count, max_threads_count
 bind "tcp://0.0.0.0:#{ENV.fetch("PORT") { Rails.application.config.proxy[:api_port] }}"
 
 # app ports
-(Rails.application.config.proxy[:app_port_star]..Rails.application.config.proxy[:app_port_end]).each do |port|
+(Rails.application.config.proxy[:puma_port_start]..Rails.application.config.proxy[:puma_port_end]).each do |port|
   bind "tcp://0.0.0.0:#{port}"
 end
 # Specifies the `environment` that Puma will run in.

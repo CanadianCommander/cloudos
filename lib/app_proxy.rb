@@ -17,11 +17,14 @@ class AppProxy < Rack::Proxy
 
     case get_proxy_mode(env)
     when :app_proxy
+      remove_x_forward_headers(env)
+
       begin
         check_request_authentication(env)
       rescue Auth::NotAuthorizedException => e
         return redirect_to_login(env)
       end
+
       proxy = get_proxy(env)
       if proxy.nil?
         ["404", {}, []]
@@ -30,7 +33,7 @@ class AppProxy < Rack::Proxy
           return perform_ws_proxy(env, proxy)
         else
           rewrite_env_app_proxy(env, proxy)
-          return perform_request(env)
+          perform_request(env)
         end
       end
     when :cloudos_path_proxy
@@ -76,6 +79,12 @@ class AppProxy < Rack::Proxy
     env['HTTP_HOST'] = "#{proxy.internal_ip}:#{proxy.internal_port}"
     env['rack.url_scheme'] = proxy.proto.to_s
     env
+  end
+
+  def remove_x_forward_headers(env)
+    # headers set by apache what will confuse Net::HTTP, in to send the request back to our self.
+    env.delete('HTTP_X_FORWARDED_HOST')
+    env.delete('HTTP_X_FORWARDED_SERVER')
   end
 
   # perform websocket proxy

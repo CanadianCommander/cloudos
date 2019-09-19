@@ -23,11 +23,15 @@ module Cloudos
     # custom proxy settings
     config.proxy = {
       # api port
-      api_port: 443,
+      api_port: 3000,
       # start of app port range, inclusive
       app_port_star: 4000,
       # end of app port range, inclusive
       app_port_end: 4128,
+      # start of puma app proxy port range
+      puma_port_start: 5000,
+      # end of puma app proxy port range
+      puma_port_end: 5128,
       # reserved path for cloudos use
       reserved_path: '/cloudos/'
     }
