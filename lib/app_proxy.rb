@@ -133,7 +133,6 @@ class AppProxy < Rack::Proxy
   end
 
   def redirect_to_login(env)
-    env["HTTP_HOST"] = "#{@hostname}:#{Rails.application.config.proxy[:api_port]}"
-    perform_request(env)
+    [ 302, {'Location' =>"https://#{@hostname}"}, [] ]
   end
 end
