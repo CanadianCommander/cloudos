@@ -15,10 +15,9 @@ class AppProxy < Rack::Proxy
   def call(env)
     original_host = env["HTTP_HOST"]
 
+    remove_x_forward_headers(env)
     case get_proxy_mode(env)
     when :app_proxy
-      remove_x_forward_headers(env)
-
       begin
         check_request_authentication(env)
       rescue Auth::NotAuthorizedException => e
@@ -39,8 +38,8 @@ class AppProxy < Rack::Proxy
     when :cloudos_path_proxy
       Rails.logger.error "NOT IMPLEMENTED"
       return nil
-      else
-        return @app.call(env)
+    else
+      return @app.call(env)
     end
   end
 
@@ -82,7 +81,7 @@ class AppProxy < Rack::Proxy
   end
 
   def remove_x_forward_headers(env)
-    # headers set by apache what will confuse Net::HTTP, in to send the request back to our self.
+    # headers set by apache what will confuse Net::HTTP, in to sending the request back to our self.
     env.delete('HTTP_X_FORWARDED_HOST')
     env.delete('HTTP_X_FORWARDED_SERVER')
   end
