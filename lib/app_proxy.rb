@@ -94,7 +94,8 @@ class AppProxy < Rack::Proxy
     # client of the web socket proxy
     ws_client = Faye::WebSocket.new(env)
     # server of the web socket proxy
-    ws_server = Faye::WebSocket::Client.new("#{proxy_proto_to_ws_proto(proxy)}://#{proxy.internal_ip}:#{proxy.internal_port}#{client_request.fullpath}")
+    ws_server = Faye::WebSocket::Client.new("#{proxy_proto_to_ws_proto(proxy)}://#{proxy.internal_ip}:#{proxy.internal_port}#{client_request.fullpath}",
+                                            nil, {headers: {'ORIGIN' => proxy.internal_ip.to_s}})
 
     ws_server.on :message do |event|
       ws_client.send(event.data)
