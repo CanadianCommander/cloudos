@@ -15,9 +15,9 @@ class AppProxy < Rack::Proxy
   def call(env)
     original_host = env["HTTP_HOST"]
 
-    remove_x_forward_headers(env)
     case get_proxy_mode(env)
     when :app_proxy
+      remove_x_forward_headers(env)
       begin
         check_request_authentication(env)
       rescue Auth::NotAuthorizedException => e
@@ -84,6 +84,8 @@ class AppProxy < Rack::Proxy
     # headers set by apache what will confuse Net::HTTP, in to sending the request back to our self.
     env.delete('HTTP_X_FORWARDED_HOST')
     env.delete('HTTP_X_FORWARDED_SERVER')
+    env.delete('HTTP_X_FORWARDED_PROTO')
+    env.delete('HTTP_X_FORWARDED_SSL')
   end
 
   # perform websocket proxy
