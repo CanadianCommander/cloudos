@@ -8,6 +8,7 @@ require_relative '../app/services/auth/authentication_service'
 
 class AppProxy < Rack::Proxy
   def initialize(app)
+    super(app)
     @app = app
     @hostname = (`hostname`).strip
   end
@@ -77,6 +78,7 @@ class AppProxy < Rack::Proxy
   def rewrite_env_app_proxy(env, proxy)
     env['HTTP_HOST'] = "#{proxy.internal_ip}:#{proxy.internal_port}"
     env['rack.url_scheme'] = proxy.proto.to_s
+    remove_keep_alive_headers(env)
     env
   end
 
@@ -86,6 +88,14 @@ class AppProxy < Rack::Proxy
     env.delete('HTTP_X_FORWARDED_SERVER')
     env.delete('HTTP_X_FORWARDED_PROTO')
     env.delete('HTTP_X_FORWARDED_SSL')
+    env.delete('HTTP_X_FORWARDED_FOR')
+  end
+
+  def remove_keep_alive_headers(env)
+    # these cause net:http to hang on larger files
+    # (presumably waiting to see if the connection well be reused).
+    env.delete("HTTP_CONNECTION")
+    env.delete("HTTP_VERSION")
   end
 
   # perform websocket proxy
