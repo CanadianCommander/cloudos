@@ -10,6 +10,11 @@ Rails.application.routes.draw do
 
   # system api
   namespace :api do
+
+    namespace :auth do
+      get '/token', to: 'api_auth#get_api_token'
+    end
+
     get '/system/programs/list', to: 'system/program#list_programs'
     scope '/system/program/:id' do
       get '/', to: 'system/program#get_program_info'
@@ -50,6 +55,7 @@ Rails.application.routes.draw do
       post '/', to: 'system/proxy#create_proxy'
       post '/container', to: 'system/proxy#create_container_proxy'
     end
+
   end
 
   devise_for :users, controllers: {

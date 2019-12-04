@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_08_003338) do
+ActiveRecord::Schema.define(version: 2019_12_04_052312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_sessions", force: :cascade do |t|
+    t.string "uuid"
+    t.date "create_date"
+    t.integer "ttl"
+    t.integer "user_id"
+    t.index ["uuid"], name: "index_api_sessions_on_uuid", unique: true
+  end
 
   create_table "container_proxies", force: :cascade do |t|
     t.integer "container_id"
@@ -84,6 +92,7 @@ ActiveRecord::Schema.define(version: 2019_09_08_003338) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "api_sessions", "users"
   add_foreign_key "container_proxies", "containers"
   add_foreign_key "container_proxies", "proxies"
   add_foreign_key "program_containers", "containers"
