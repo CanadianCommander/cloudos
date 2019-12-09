@@ -54,7 +54,7 @@ class System::ProxyService
   def next_available_port
     destroy_expired_proxies
 
-    (Rails.application.config.proxy[:app_port_star]...Rails.application.config.proxy[:app_port_end]).each do |i|
+    (Rails.application.config.settings[:proxy][:app_port_start]...Rails.application.config.settings[:proxy][:app_port_end]).each do |i|
       proxy = nil
       begin
         proxy = get_proxy_by_external_port(i)

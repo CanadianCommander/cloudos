@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   namespace :api do
 
     namespace :auth do
-      get '/token', to: 'api_auth#get_api_token'
+      post '/token', to: 'api_auth#get_api_token'
+      get '/valid', to: 'api_auth#is_token_valid?'
     end
 
     get '/system/programs/list', to: 'system/program#list_programs'

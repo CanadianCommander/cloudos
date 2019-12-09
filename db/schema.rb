@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 2019_12_04_052312) do
   enable_extension "plpgsql"
 
   create_table "api_sessions", force: :cascade do |t|
-    t.string "uuid"
-    t.date "create_date"
-    t.integer "ttl"
+    t.string "uuid", null: false
+    t.datetime "expire_date", null: false
+    t.integer "ttl_sec", null: false
     t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["uuid"], name: "index_api_sessions_on_uuid", unique: true
   end
 

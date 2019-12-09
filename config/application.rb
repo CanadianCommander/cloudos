@@ -20,16 +20,6 @@ module Cloudos
     # allow requests to cloudos.ca domain
     config.hosts << /.*cloudos\.ca/
 
-    # custom proxy settings
-    config.proxy = {
-      # start of app port range, inclusive
-      app_port_star: 4000,
-      # end of app port range, inclusive
-      app_port_end: 4128,
-      # reserved path for cloudos use
-      reserved_path: '/cloudos/'
-    }
-
     # autoload lib dir
     config.eager_load_paths << Rails.root.join('lib')
 
@@ -38,5 +28,32 @@ module Cloudos
 
     # active record update time / created time, time zone
     config.active_record.default_timezone = :utc
+    config.time_zone = 'UTC'
+
+    # default settings
+    config.settings = {
+      # ActionJob settings
+      jobs: {
+        # The frequency with with the session cache is written to the database
+        CACHE_SYNC_INTERVAL: 600 # 10 minutes
+      },
+
+      # application proxy settings
+      proxy: {
+        # start of app port range, inclusive
+        app_port_start: 4000,
+        # end of app port range, inclusive
+        app_port_end: 4128,
+        # reserved path for cloudos use
+        reserved_path: '/cloudos/'
+      },
+
+      api: {
+        # by default whitelist all private networks outlined in
+        # https://tools.ietf.org/html/rfc1918
+        ip_white_list: %w(172.17.* 192.168.* 10.0.*)
+      }
+    }
+
   end
 end

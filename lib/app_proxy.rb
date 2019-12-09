@@ -48,8 +48,8 @@ class AppProxy < Rack::Proxy
   def get_proxy_mode(env)
     request = Rack::Request.new(env)
     # proxy logic
-    if request.port >= Rails.application.config.proxy[:app_port_star] && request.port <= Rails.application.config.proxy[:app_port_end]
-      if request.path =~ /^#{Rails.application.config.proxy[:reserved_path]}.*/
+    if request.port >= Rails.application.config.settings[:proxy][:app_port_start] && request.port <= Rails.application.config.settings[:proxy][:app_port_end]
+      if request.path =~ /^#{Rails.application.config.settings[:proxy][:reserved_path]}.*/
         Rails.logger.debug "Proxy to /cloudos/ path"
         # TODO route to cloudos controller(s)
         return :cloudos_path_proxy
