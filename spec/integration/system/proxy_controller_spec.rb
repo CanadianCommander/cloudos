@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'CloudOS API' do
+describe 'CloudOS API', :proxy do
 
   path '/api/system/proxies/list' do
     get 'Get a list of all proxies on the system' do

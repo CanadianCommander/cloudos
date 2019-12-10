@@ -35,7 +35,7 @@ module Cloudos
       # ActionJob settings
       jobs: {
         # The frequency with with the session cache is written to the database
-        cache_sync_interval: 30 #600 # 10 minutes
+        cache_sync_interval: 600 # 10 minutes
       },
 
       # application proxy settings
@@ -51,7 +51,7 @@ module Cloudos
       api: {
         # by default whitelist all private networks outlined in
         # https://tools.ietf.org/html/rfc1918
-        ip_white_list: %w(172.17.* 192.168.* 10.0.*)
+        ip_white_list: %w(172.17.* 192.168.* 10.0.*, 127.0.0.1)
       }
     }
 

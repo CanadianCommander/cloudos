@@ -1,0 +1,17 @@
+api_session_to1:
+  type: :object
+  properties:
+    id:
+      type: :integer
+    uuid:
+      type: :string
+    expire_date:
+      type: :string
+    ttl_sec:
+      type: :integer
+    user_id:
+      type: :integer
+    create_at:
+      type: :string
+    update_at:
+      type: :string

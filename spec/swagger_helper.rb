@@ -8,11 +8,12 @@ RSpec.configure do |config|
   config.swagger_root = Rails.root.to_s + '/swagger'
 
   # load external swagger definition files
-  yaml_files = [
-    "spec/transfer_object/container.yml",
-    "spec/transfer_object/program.yml",
-    "spec/transfer_object/proxy.yml"
-  ]
+  yaml_files = %w(
+    spec/transfer_object/container.yml
+    spec/transfer_object/program.yml
+    spec/transfer_object/proxy.yml
+    spec/transfer_object/api_session.yml
+  )
   yaml_hash = {}
   yaml_files.each do |path|
     yaml_hash.merge!(YAML.load(File.open(path)))

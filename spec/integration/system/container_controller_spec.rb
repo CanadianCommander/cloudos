@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'CloudOS API' do
+describe 'CloudOS API', :container do
 
   path '/api/system/containers/list' do
     get 'Get a list of all containers on the system' do

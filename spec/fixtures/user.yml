@@ -1,0 +1,9 @@
+user1:
+  id: 1
+  email: "me@bbenetti.ca"
+  encrypted_password: "$2a$11$MPktldCtiMrp1bEM4aRW1ujNYDwL7/aT7DkQCYbp6cV2KPJ2mO4PS"
+  reset_password_token: nil
+  reset_password_sent_at: nil
+  remember_created_at: nil
+  created_at: '2020-01-01'
+  updated_at: '2020-01-01'

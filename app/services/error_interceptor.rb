@@ -4,10 +4,8 @@ module ErrorInterceptor
 
   def handle_controller_exception(exception)
     case exception
-    when Auth::NotAuthorizedException
+    when Auth::NotAuthorizedException, Auth::AuthorizationException
       unauthorized_401(exception)
-    when Auth::AuthorizationException
-      bad_request_400(exception)
     else
       internal_server_error_500(exception)
     end
@@ -19,11 +17,15 @@ module ErrorInterceptor
     render json: error_response(ex.to_s), status: 500
   end
 
+  def bad_request_400(ex)
+    render json: error_response(ex.to_s), status: 400
+  end
+
   def unauthorized_401(ex)
     render json: error_response(ex.to_s), status: 401
   end
 
-  def bad_request_400(ex)
-    render json: error_response(ex.to_s), status: 400
+  def bad_request_403(ex)
+    render json: error_response(ex.to_s), status: 403
   end
 end

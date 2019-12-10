@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'CloudOS API' do
+describe 'CloudOS API', :program do
   path '/api/system/programs/list' do
     get 'Get a list of install programs' do
       tags 'Program'
