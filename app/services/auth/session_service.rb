@@ -13,7 +13,7 @@ module Auth
     # indicate that a session has just been used. Updating the expiry date accordingly
     def poke_session(uuid)
       if @session_map.has_key?(uuid)
-        @session_map[uuid][:expire] = DateTime.current + @session_map[uuid][:ttl]
+        @session_map[uuid][:expire] = @session_map[uuid][:ttl].seconds.from_now
       else
         session = get_database_session(uuid)
         @session_map[uuid] = {
@@ -85,6 +85,13 @@ module Auth
           session_map.delete(uuid)
         end
       end
+
+      get_all_database_sessions.each do |db_session|
+        if (DateTime.current <=> db_session.expire_date) != -1
+          db_session.destroy
+        end
+      end
     end
+
   end
 end

@@ -35,7 +35,7 @@ module Cloudos
       # ActionJob settings
       jobs: {
         # The frequency with with the session cache is written to the database
-        CACHE_SYNC_INTERVAL: 600 # 10 minutes
+        cache_sync_interval: 30 #600 # 10 minutes
       },
 
       # application proxy settings

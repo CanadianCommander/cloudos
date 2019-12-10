@@ -5,4 +5,4 @@ require_relative 'application'
 Rails.application.initialize!
 
 # start system jobs
-Auth::SessionCacheSyncJob.set(wait: 60).perform_later
+Auth::SessionCacheSyncJob.set(wait: Rails.application.config.settings[:jobs][:cache_sync_interval]).perform_later

@@ -29,6 +29,7 @@ class Api::ApiController < ApplicationController
       token = Auth::AuthenticationService.instance.get_request_token(request)
       if Auth::SessionService.instance.is_valid?(token)
         @current_user = Auth::SessionService.instance.get_database_session(token).user
+        Auth::SessionService.instance.poke_session(token)
       else
         raise NotAuthorizedException.new("Not Authorized to use this resource")
       end

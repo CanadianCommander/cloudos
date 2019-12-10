@@ -12,6 +12,6 @@ class Auth::SessionCacheSyncJob < ApplicationJob
       end
     end
 
-    self.class.set(wait: Rails.application.config.settings[:jobs][:CACHE_SYNC_INTERVAL]).perform_later
+    self.class.set(wait: Rails.application.config.settings[:jobs][:cache_sync_interval]).perform_later
   end
 end
